@@ -25,10 +25,13 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants?.map(
         (ele) => ele?.info
       );
+      console.log(finalData);
+
     setListOfRestaurants(finalData);
     setFilteredRestaurants(finalData);
   };
 
+  
   const {setUserName, loggedInUser} = useContext(UserContext);
 
   const onlineStatus = useOnlineStatus();
@@ -37,7 +40,7 @@ const Body = () => {
       <h1>Looks you are offline, Please check your internet connection</h1>
     );
     
-  return listOfRestaurants.length === 0 ? (
+  return listOfRestaurants?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -45,6 +48,7 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={serachText}
             onChange={(e) => {
@@ -53,7 +57,7 @@ const Body = () => {
           />
           <button className="px-4 py-1 bg-green-100 m-4 rounded-lg"
             onClick={() => {
-              const filteredRestaturant = listOfRestaurants.filter((res) =>
+              const filteredRestaturant = listOfRestaurants?.filter((res) =>
                 res.name.toLowerCase().includes(serachText.toLowerCase())
               );
               setFilteredRestaurants(filteredRestaturant);
